@@ -1,5 +1,5 @@
 ﻿tanggal,jumlah_periksa,positif,sembuh,meninggal,negatif,proses_periksa,kasus_perawatan,catatan
-`,112,0,0,0,110,2,0,
+2020-02-18,112,0,0,0,110,2,0,
 2020-02-19,114,0,0,0,112,2,0,
 2020-02-20,118,0,0,0,116,2,0,
 2020-02-21,121,0,0,0,121,0,0,
@@ -34,4 +34,4 @@
 2020-03-21,2365,450,20,38,1895,22,0,
 2020-03-22,2483,579,30,49,1904,0,500,"tidak tersedia PDF, diambil dari tampilan pada situs (pada tanggal 23, jam tidak dicatat)."
 2020-03-23,2756,579,30,49,2177,0,500,
-2020-03-24,2863,686,55,30,2177,0,601,"(diambil pada situs, pada 2020-03-24 16:07 WIB)"
+2020-03-24,2863,686,30,55,2177,0,601,"(diambil pada situs, pada 2020-03-24 16:07 WIB)"
