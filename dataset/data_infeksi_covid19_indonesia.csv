@@ -1,4 +1,4 @@
-﻿tanggal,jumlah_periksa,positif,sembuh,meninggal,negatif,proses_periksa,kasus_perawatan,catatan
+﻿tanggal,jumlah_periksa,konfirmasi,sembuh,meninggal,negatif,proses_periksa,kasus_perawatan,catatan
 2020-02-18,112,0,0,0,110,2,0,
 2020-02-19,114,0,0,0,112,2,0,
 2020-02-20,118,0,0,0,116,2,0,
