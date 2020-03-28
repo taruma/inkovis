@@ -1,6 +1,57 @@
 # inkovis
 
-Repo inkovis berisikan _jupyter notebook_ (buku) yang mevisualisasikan data infeksi COVID-19 di Indonesia menggunakan matplotlib. 
+Repo inkovis berisikan modul `inkovis` dan _jupyter notebook_ (buku) yang dapat digunakan untuk mevisualisasikan data infeksi COVID-19 di Indonesia. 
+
+## Modul inkovis
+
+### Pemasangan
+
+Untuk menggunakan modul inkovis, Anda membutuhkan dua modul yaitu `inkovis.py` dan `so.py`. `inkovis.py` merupakan modul utama yang berisikan fungsi untuk memvisualisasikan data. `so.py` merupakan modul tambahan yang berisikan fungsi dari orang lain yang digunakan. 
+
+Jika menggunakan jupyter notebook/google colab/kaggle kernel, bisa menggunakan kode berikut: 
+
+```python
+!wget -O inkovis.py "https://github.com/taruma/inkovis/raw/master/notebook/inkovis.py" -q
+!wget -O so.py "https://github.com/taruma/inkovis/raw/master/notebook/so.py" -q
+```
+
+Atau bisa juga diunduh filenya pada tautan berikut: [inkovis.py](https://github.com/taruma/inkovis/blob/master/notebook/inkovis.py), [so.py](https://github.com/taruma/inkovis/blob/master/notebook/so.py).
+
+### Penggunaan
+
+Fungsi yang tersedia pada modul inkovis meminta input dataset objek `pandas.DataFrame` dan objek `matplotlib.axes.Axes`.
+
+```python
+fig, ax = plt.subplots()
+
+inkovis.plot_confirmed_case(dataset, ax)
+```
+
+Contoh lainnya:
+
+```python
+fig, ax = plt.subplots(nrows=2, ncols=1, sharex=True, gridspec_kw={'height_ratios':[1, 3]})
+
+inkovis.plot_confirmed_case(
+    dataset, ax[0],
+    show_diff_bar=False, show_info=False, show_hist=False)
+
+inkovis.plot_confirmed_growth(
+    dataset, ax[1], 
+    show_bar=True, show_confirmed=True, 
+    show_numbers=True,
+    show_total_numbers=True, show_title=False, show_info=False,
+    show_legend=False)
+```
+
+Untuk saat ini, belum tersedia dokumentasi mengenai penggunaan modul inkovis. 
+
+### Modul `so.py`
+
+Modul inkovis menggunakan potongan kode/fungsi berikut yang disimpan pada file `so.py`:
+- [[From Stackoverflow]: Matplotlib axis with two scales shared origin](https://stackoverflow.com/a/46901839/4886384). Menggunakan potongan kode yang disediakan oleh Tim P.
+
+
 
 ## Dataset
 
@@ -32,5 +83,3 @@ Informasi tambahan:
 - Informasi `kasus_perawatan` mulai tersedia pada infografik sejak 22 Maret 2020.
 - Istilah "Spesimen Diterima" (yang tertampil pada infografik di situs) nilainya sama dengan "Jumlah orang yang diperiksa". Sehingga, diasumsikan bahwa angka tersebut menyatakan jumlah pengujian yang telah dilakukan.
 - Angka yang tersedia pada laporan situasi terkini ditemukan memiliki kekeliruan seperti angka `jumlah_periksa` tidak memiliki nilai yang sama dengan total kolom `konfirmasi`, `negatif`, dan `proses_periksa`. Tetapnya menggunakan informasi dari laporan situasi terkini agar konsisten dan memudahkan dalam memastikan perolehan data. Sehingga, repo ini lebih fokus memvisualisasikan data, dan bukan untuk memvalidasi data ataupun menganalisis data.
-- Repo ini terbuka untuk umum, dipersilakan untuk membuat _issue_, _pull request_, dll. Diskusi diharapkan tidak mengarah ke interpretasi/analisis data dan hanya fokus pada ide/implementasi dalam memvisualisasikan data. 
-- 
