@@ -188,13 +188,11 @@ def plot_confirmed_case(
     ax.set_xlabel('Tanggal', fontsize=14)
     ax.set_ylabel('Kasus Konfirmasi', fontsize=14)
 
-    ax.set_ylim(0, round(max(total_confirmed)+200, -2))
-
     ax.grid(True, axis='both')
 
     if show_legend:
         ax.legend(loc='upper left')
-    ax.margins(x=0.01)
+    ax.margins(x=0.01, y=0.2)
 
     plt.tight_layout()
 
@@ -242,7 +240,7 @@ def plot_testing_case(
     # NEGATIVE
     ax.bar(
         x_pos, total_negative, bottom=total_checks,
-        color='orange', label='NEGATIF COVID-19'
+        color='blue', label='NEGATIF COVID-19', alpha=0.7
     )
 
     # CHECKS
@@ -271,7 +269,7 @@ def plot_testing_case(
         ax.bar(
             x_pos_diff, diff_negative,
             bottom=total_tests[:-1]+diff_checks,
-            color='orange', edgecolor='black', alpha=0.5
+            color='blue', edgecolor='black', alpha=0.5
         )
 
         # POSITIVE
@@ -386,13 +384,11 @@ def plot_testing_case(
     ax.set_xlabel('Tanggal', fontsize=14)
     ax.set_ylabel('Spesimen yang diterima', fontsize=14)
 
-    ax.set_ylim(0, round(max(total_tests)+1000, -2))
-
     ax.grid(True, axis='both')
 
     if show_legend:
         ax.legend(loc='upper left')
-    ax.margins(x=0.01)
+    ax.margins(x=0.01, y=0.2)
 
     plt.tight_layout()
 
@@ -537,7 +533,7 @@ def plot_confirmed_growth(
             alpha=0.3, color='grey',
             label='Kasus Konfirmasi'
         )
-        ax2.set_ylabel('Kasus Konfirmasi')
+        ax2.set_ylabel('Kasus Konfirmasi', fontsize=14)
 
         if show_confirmed_numbers:
             for i, val in enumerate(total_confirmed):
@@ -551,6 +547,9 @@ def plot_confirmed_growth(
                     ha='center', va='bottom', size=10, fontweight='bold',
                     color='black', alpha=0.3
                 )
+
+        so.align_yaxis_np((ax, ax2))
+        ax2.set_yticklabels([f'{abs(x):.0f}' for x in ax2.get_yticks()])
 
     # INFO
 
@@ -583,6 +582,7 @@ def plot_confirmed_growth(
     # LEGEND
     ax.set_xticks(x_pos)
     ax.set_xticklabels(date_ticks, rotation=0)
+    ax.set_yticklabels([f'{abs(x):.0f}' for x in ax.get_yticks()])
 
     if show_title:
         text_title = (
@@ -606,10 +606,229 @@ def plot_confirmed_growth(
         else:
             ax.legend(loc='upper left')
 
+    ax.set_xlim(min(x_pos)-1, max(x_pos)+1)
+    ax.margins(x=0.01)
+    ax.axhline(0, linestyle='--', color='grey')
+
+    ax.grid(True, axis='both')
+    ax.grid(axis='y', linestyle='-.')
+
+    if show_bar is False:
+        ax.set_yticks([], [])
+
+    plt.tight_layout()
+
+
+def plot_testing_growth(
+        dataset, ax, mask=None, days=1,
+        show_info=True, text_left=None, text_right=None,
+        show_title=True, text_title=None,
+        show_bar=True,
+        show_numbers=True, show_total_numbers=True,
+        show_legend=True,
+        show_confirmed=False, show_confirmed_numbers=True):
+
+    slice_data = (
+        slice(None, None, days) if mask is None else slice(*mask, days)
+    )
+
+    data = dataset[slice_data]
+    date_index = data.index
+    date_ticks = date_index.strftime('%d\n%b').to_list()
+    rows, _ = data.shape
+
+    total_tests = data['jumlah_periksa'].values
+    total_positive = data['konfirmasi'].values
+    total_negative = data['negatif'].values
+    total_checks = data['proses_periksa'].values
+
+    x_pos = np.arange(0, rows*2, 2)
+    x_pos_diff = x_pos[:-1] + 1
+
+    # DIFF
+    diff_tests = np.diff(total_tests)
+    diff_positive = np.diff(total_positive)
+    diff_negative = np.diff(total_negative)
+    diff_checks = np.diff(total_checks)
+
+    if show_bar:
+
+        # NEGATIVE
+        ax.bar(
+            x_pos_diff, _remove_negative(diff_negative),
+            color='blue',  alpha=0.5,  # edgecolor='black', alpha=0.7,
+            bottom=_remove_negative(diff_checks),
+            label='Negatif COVID-19'
+        )
+
+        # CHECKS
+        ax.bar(
+            x_pos_diff, _remove_negative(diff_checks),
+            bottom=0, alpha=0.5,
+            color='yellow',  # edgecolor='black',
+            label='Proses Pemeriksaan'
+        )
+
+        # POSITIVE
+        ax.bar(
+            x_pos_diff, _remove_negative(diff_positive)*-1,
+            bottom=0, alpha=0.5,
+            color='red',  # edgecolor='black',
+            label='Kasus Konfirmasi Positif COVID-19'
+        )
+
+    # ANNOTATION
+    if show_numbers:
+        for i, val in enumerate(diff_tests):
+
+            # NEGATIVE
+            text = (
+                f'{diff_negative[i]:+d}'
+            )
+
+            ax.annotate(
+                text, (x_pos_diff[i], 0),
+                xytext=(0, 50), textcoords='offset points',
+                ha='center', va='bottom', size=10, fontweight='bold',
+                color='white', family='monospace',
+                bbox=dict(
+                    facecolor='blue', alpha=1, boxstyle='square'
+                )
+            )
+
+            # CHECKS
+            text = (
+                f'{diff_checks[i]:+d}'
+            )
+
+            ax.annotate(
+                text, (x_pos_diff[i], 0),
+                xytext=(0, 30), textcoords='offset points',
+                ha='center', va='bottom', size=10, fontweight='bold',
+                color='black', family='monospace',
+                bbox=dict(
+                    facecolor='yellow', alpha=1, boxstyle='square'
+                )
+            )
+
+            # POSITIVE CASE
+            text = (
+                f'{diff_positive[i]:+d}'
+            )
+
+            ax.annotate(
+                text, (x_pos_diff[i], 0),
+                xytext=(0, 10), textcoords='offset points',
+                ha='center', va='bottom', size=10, fontweight='bold',
+                color='white', family='monospace',
+                bbox=dict(
+                    facecolor='red', alpha=1, boxstyle='square'
+                )
+            )
+
+            if show_total_numbers:
+                total = np.sum(
+                    (diff_positive[i], diff_negative[i], diff_checks[i]))
+                text = (
+                    f'{total:+d}'
+                )
+
+                ax.annotate(
+                    text, (x_pos_diff[i], 0),
+                    xytext=(0, 70), textcoords='offset points',
+                    ha='center', va='bottom', size=12, fontweight='bold',
+                    color='black',
+                )
+
     if show_confirmed:
+        ax2 = ax.twinx()
+        ax2.plot(
+            x_pos, total_tests,
+            color='gray', linestyle='--',
+            marker='o', markerfacecolor='gray',
+            alpha=0.2
+        )
+        ax2.bar(
+            x_pos, total_tests,
+            alpha=0.3, color='grey',
+            label='Jumlah Spesimen'
+        )
+        ax2.set_ylabel('Jumlah Spesimen', fontsize=14)
+
+        if show_confirmed_numbers:
+            for i, val in enumerate(total_tests):
+                text = (
+                    f'{val:d}'
+                )
+
+                ax2.annotate(
+                    text, (x_pos[i], val),
+                    xytext=(0, 10), textcoords='offset points',
+                    ha='center', va='top', size=10, fontweight='bold',
+                    color='black', alpha=0.3
+                )
+
         so.align_yaxis_np((ax, ax2))
+        ax2.set_yticklabels([f'{abs(x):.0f}' for x in ax2.get_yticks()])
+
+    # INFO
+
+    if show_info:
+        text_right = (
+            'Data: Situasi Terkini Perkembangan COVID-19 ' +
+            '(infeksiemerging.kemkes.go.id)'
+            if text_right is None else
+            text_right
+        )
+        ax.text(
+            1, -0.1, text_right,
+            horizontalalignment='right',
+            verticalalignment='top', style='normal', family='monospace',
+            transform=ax.transAxes
+        )
+
+        text_left = (
+            '' if text_left is None else
+            text_left
+        )
+
+        ax.text(
+            0, -0.1, text_left,
+            horizontalalignment='left',
+            verticalalignment='top', style='normal', family='serif',
+            transform=ax.transAxes
+        )
+
+    # LEGEND
+
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels(date_ticks, rotation=0)
+    ax.set_yticklabels([f'{abs(x):.0f}' for x in ax.get_yticks()])
+
+    if show_title:
+        text_title = (
+            'PERKEMBANGAN JUMLAH SPESIMEN COVID-19 DI INDONESIA'
+            if text_title is None else text_title
+        )
+        ax.set_title(
+            text_title,
+            fontsize='x-large', fontweight='bold'
+        )
+
+    ax.set_xlabel('Tanggal', fontsize=14)
+    ax.set_ylabel('$(\\pm)$ Spesimen', fontsize=14)
+
+    if show_legend:
+        if show_confirmed:
+            handles1, labels1 = ax.get_legend_handles_labels()
+            handles2, labels2 = ax2.get_legend_handles_labels()
+            ax.legend((handles1 + handles2),
+                      (labels1 + labels2), loc='upper left')
+        else:
+            ax.legend(loc='upper left')
 
     ax.set_xlim(min(x_pos)-1, max(x_pos)+1)
+    ax.margins(x=0.01)
     ax.axhline(0, linestyle='--', color='grey')
 
     ax.grid(True, axis='both')
