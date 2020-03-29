@@ -4,6 +4,20 @@ Repo inkovis berisikan modul `inkovis` dan _jupyter notebook_ (buku) yang dapat 
 
 -----
 
+## Grafik
+
+Dengan data 15 hari terakhir:
+
+### Kasus Konfirmasi
+
+![](notebook/IMG/KONFIRMASI_PERKEMBANGAN_15AKHIR_HARIAN.png)
+
+### Jumlah Spesimen
+
+![](notebook/IMG/SPESIMEN_PERKEMBANGAN_15AKHIR_HARIAN.png)
+
+-----
+
 ## Notebook
 
 Beriku notebook yang menggunakan modul inkovis:
