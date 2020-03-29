@@ -4,9 +4,9 @@ Repo inkovis berisikan modul `inkovis` dan _jupyter notebook_ (buku) yang dapat 
 
 -----
 
-## Grafik
+## Contoh Grafik
 
-Dengan data 15 hari terakhir:
+Contoh grafik menggunakan modul inkovis dengan data 15 hari terakhir (harian):
 
 ### Kasus Konfirmasi
 
@@ -20,10 +20,11 @@ Dengan data 15 hari terakhir:
 
 ## Notebook
 
-Beriku notebook yang menggunakan modul inkovis:
+Beriku notebook/pos yang menggunakan modul inkovis:
 
-- [[Github: Inkovis]](https://github.com/taruma/inkovis/blob/master/notebook/inkovis_nb.ipynb). Pada buku ini memvisualisasikan data COVID-19. Buku ini juga meragakan fungsi yang tersedia di modul inkovis. [Lihat buku ini menggunakan NBViewer](https://nbviewer.jupyter.org/github/taruma/inkovis/blob/master/notebook/inkovis_nb.ipynb).
+- [[Github: inkovis_nb.ipynb]](https://github.com/taruma/inkovis/blob/master/notebook/inkovis_nb.ipynb). Pada buku ini memvisualisasikan data COVID-19. Buku ini juga meragakan fungsi yang tersedia di modul inkovis. [Lihat buku ini menggunakan NBViewer](https://nbviewer.jupyter.org/github/taruma/inkovis/blob/master/notebook/inkovis_nb.ipynb).
 - [[Kaggle: Visualisasi Data COVID-19 di Indonesia]](https://www.kaggle.com/tarumainfo/visualisasi-data-covid-19-indonesia). Visualisasinya menggunakan dataset yang tersedia di kaggle. Pada buku ini juga dijelaskan latar belakang pada pembuatan visualisasinya.
+- [Visualisasi Covid-19 di Indonesia](https://taruma.github.io/articles/visualisasi-covid19). Pos yang menampilkan beberapa gambar yang dihasilkan dari notebook `inkovis_nb`.
 
 -----
 
@@ -55,6 +56,8 @@ fig, ax = plt.subplots()
 
 inkovis.plot_confirmed_case(dataset, ax)
 ```
+
+### Dokumentasi
 
 Untuk saat ini, belum tersedia dokumentasi mengenai penggunaan modul inkovis. 
 
