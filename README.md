@@ -2,15 +2,26 @@
 
 Repo inkovis berisikan modul `inkovis` dan _jupyter notebook_ (buku) yang dapat digunakan untuk mevisualisasikan data infeksi COVID-19 di Indonesia. 
 
+-----
+
+## Notebook
+
+Beriku notebook yang menggunakan modul inkovis:
+
+- [[Github: Inkovis]](https://github.com/taruma/inkovis/blob/master/notebook/inkovis_nb.ipynb). Pada buku ini memvisualisasikan data COVID-19. Buku ini juga meragakan fungsi yang tersedia di modul inkovis. [Lihat buku ini menggunakan NBViewer](https://nbviewer.jupyter.org/github/taruma/inkovis/blob/master/notebook/inkovis_nb.ipynb).
+- [[Kaggle: Visualisasi Data COVID-19 di Indonesia]](https://www.kaggle.com/tarumainfo/visualisasi-data-covid-19-indonesia). Visualisasinya menggunakan dataset yang tersedia di kaggle. Pada buku ini juga dijelaskan latar belakang pada pembuatan visualisasinya.
+
+-----
+
 ## Modul inkovis
 
 ### Pemasangan
 
-Untuk menggunakan modul inkovis, Anda membutuhkan dua modul yaitu `inkovis.py` dan `so.py`. `inkovis.py` merupakan modul utama yang berisikan fungsi untuk memvisualisasikan data. `so.py` merupakan modul tambahan yang berisikan fungsi dari orang lain yang digunakan. 
+Untuk menggunakan modul inkovis, dibutuhkan dua modul yaitu `inkovis.py` dan `so.py`. `inkovis.py` merupakan modul utama yang berisikan fungsi untuk memvisualisasikan data. `so.py` merupakan modul tambahan yang berisikan fungsi dari orang lain yang digunakan. 
 
 Jika menggunakan jupyter notebook/google colab/kaggle kernel, bisa menggunakan kode berikut: 
 
-```python
+```bash
 !wget -O inkovis.py "https://github.com/taruma/inkovis/raw/master/notebook/inkovis.py" -q
 !wget -O so.py "https://github.com/taruma/inkovis/raw/master/notebook/so.py" -q
 ```
@@ -19,39 +30,26 @@ Atau bisa juga diunduh filenya pada tautan berikut: [inkovis.py](https://github.
 
 ### Penggunaan
 
-Fungsi yang tersedia pada modul inkovis meminta input dataset objek `pandas.DataFrame` dan objek `matplotlib.axes.Axes`.
+Fungsi yang tersedia pada modul inkovis meminta input dataset objek `pandas.DataFrame` dan objek `matplotlib.axes.Axes`. DataFrame yang digunakan harus memiliki kolom: `jumlah_periksa`, `konfirmasi`, `sembuh`, `meninggal`, `negatif`, `proses_periksa`. 
+
+Contoh penggunaan:
 
 ```python
+import inkovis
+
 fig, ax = plt.subplots()
 
 inkovis.plot_confirmed_case(dataset, ax)
-```
-
-Contoh lainnya:
-
-```python
-fig, ax = plt.subplots(nrows=2, ncols=1, sharex=True, gridspec_kw={'height_ratios':[1, 3]})
-
-inkovis.plot_confirmed_case(
-    dataset, ax[0],
-    show_diff_bar=False, show_info=False, show_hist=False)
-
-inkovis.plot_confirmed_growth(
-    dataset, ax[1], 
-    show_bar=True, show_confirmed=True, 
-    show_numbers=True,
-    show_total_numbers=True, show_title=False, show_info=False,
-    show_legend=False)
 ```
 
 Untuk saat ini, belum tersedia dokumentasi mengenai penggunaan modul inkovis. 
 
 ### Modul `so.py`
 
-Modul inkovis menggunakan potongan kode/fungsi berikut yang disimpan pada file `so.py`:
-- [[From Stackoverflow]: Matplotlib axis with two scales shared origin](https://stackoverflow.com/a/46901839/4886384). Menggunakan potongan kode yang disediakan oleh Tim P.
+Modul inkovis menggunakan potongan kode/fungsi orang lain yang disimpan pada file `so.py`:
+- Fungsi `align_yaxis_np()`, [[From Stackoverflow]: Matplotlib axis with two scales shared origin](https://stackoverflow.com/a/46901839/4886384). Menggunakan potongan kode yang disediakan oleh Tim P.
 
-
+-----
 
 ## Dataset
 
@@ -60,13 +58,13 @@ Data diperoleh dari situs Infeksi Emerging oleh Kementerian Kesehatan beralamat 
 Dataset memiliki 9 kolom berupa:
 
 - `tanggal`: Tanggal data dilaporkan (diambil dari informasi "Data dilaporkan sampai [tanggal]" di setiap dokumen situasi terkini).
-- `jumlah_periksa`: Jumlah orang yang telah diperiksa / jumlah spesimen yang diterima.
-- `konfirmasi`: Jumlah orang yang positif COVID-19.
-- `sembuh`: Jumlah orang yang sembuh dari positif COVID-19.
-- `meninggal`: Jumlah orang yang meninggal dari positif COVID-19.
-- `negatif`: Jumlah orang yang negatif COVID-19.
+- `jumlah_periksa`: Jumlah kasus yang telah diperiksa / jumlah spesimen yang diterima.
+- `konfirmasi`: Jumlah kasus yang positif COVID-19.
+- `sembuh`: Jumlah kasus yang sembuh dari positif COVID-19.
+- `meninggal`: Jumlah kasus yang meninggal dari positif COVID-19.
+- `negatif`: Jumlah kasus yang negatif COVID-19.
 - `proses_periksa`: Jumlah spesimen yang masih dalam proses pemeriksaan.
-- `kasus_perawatan`: Jumlah kasus dalam perawatan. Informasi ini tidak/belum tersedia pada dokumen situasi terkini. Informasi ini tersedia sejak tanggal 22 Maret 2020 pada update yang tersedia pada situsnya. 
+- `kasus_perawatan`: Jumlah kasus dalam perawatan. Informasi ini tidak/belum tersedia pada dokumen situasi terkini. Informasi ini tersedia sejak tanggal 22 Maret 2020 pada update infografis yang tersedia pada situsnya. 
 - `catatan`: Informasi tambahan dari dokumen dan/atau komentar mengenai laporan data. 
 
 Informasi tambahan:
