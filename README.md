@@ -1,5 +1,7 @@
 # inkovis
 
+![Execute Notebook](https://github.com/taruma/inkovis/workflows/Execute%20Notebook/badge.svg)
+
 Repo inkovis berisikan modul `inkovis` dan _jupyter notebook_ (buku) yang dapat digunakan untuk mevisualisasikan data infeksi COVID-19 di Indonesia. 
 
 -----
