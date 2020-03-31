@@ -34,7 +34,7 @@ jobs:
       - name: Run code
         run: |
           cd notebook
-          jupyter nbconvert --to notebook --execute inkovis_nb.ipynb --inplace
+          find . -name '*.ipynb' -exec jupyter nbconvert --to notebook --execute {} --inplace \;
 
       - name: Commit Changes
         run: |
