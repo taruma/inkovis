@@ -1,6 +1,12 @@
 # inkovis
 
-![Execute Notebook](https://github.com/taruma/inkovis/workflows/Execute%20Notebook/badge.svg)
+<div align="center">
+
+Github Actions | Status
+:- | :-
+`execnb` | [![Execute Notebook](https://github.com/taruma/inkovis/workflows/Execute%20Notebook/badge.svg)](https://github.com/taruma/inkovis/actions)
+
+</div>
 
 Repo inkovis berisikan modul `inkovis` dan _jupyter notebook_ (buku) yang dapat digunakan untuk memvisualisasikan data infeksi COVID-19 di Indonesia. 
 
@@ -8,7 +14,7 @@ Repo inkovis berisikan modul `inkovis` dan _jupyter notebook_ (buku) yang dapat 
 
 ## Notebook
 
-Beriku notebook/pos yang menggunakan modul/dataset inkovis:
+Berikut notebook/pos yang menggunakan modul/dataset inkovis:
 
 ### Latar Belakang 
 
@@ -30,15 +36,15 @@ Beriku notebook/pos yang menggunakan modul/dataset inkovis:
 
 ## Contoh Grafik
 
-Contoh grafik menggunakan modul inkovis dengan data 15 hari terakhir (harian):
+Contoh grafik menggunakan modul inkovis dengan data 31 hari terakhir (harian):
 
 ### Kasus Konfirmasi
 
-![](notebook/IMG/KONFIRMASI_PERKEMBANGAN_15AKHIR_HARIAN.png)
+![](notebook/SUM_KASUS_KONFIRMASI_HARIAN.png)
 
 ### Jumlah Spesimen
 
-![](notebook/IMG/SPESIMEN_PERKEMBANGAN_15AKHIR_HARIAN.png)
+![](notebook/SUM_JUMLAH_SPESIMEN_HARIAN.png)
 
 -----
 
@@ -46,7 +52,7 @@ Contoh grafik menggunakan modul inkovis dengan data 15 hari terakhir (harian):
 
 ### Pemasangan
 
-Untuk menggunakan modul inkovis, dibutuhkan dua modul yaitu `inkovis.py` dan `so.py`. `inkovis.py` merupakan modul utama yang berisikan fungsi untuk memvisualisasikan data. `so.py` merupakan modul tambahan yang berisikan fungsi dari orang lain yang digunakan. 
+Untuk menggunakan modul inkovis, dibutuhkan dua modul yaitu `inkovis.py` dan `so.py`. `inkovis.py` merupakan modul utama yang berisikan fungsi untuk memvisualisasikan data. `so.py` merupakan modul tambahan yang berisikan fungsi dari orang lain yang digunakan. Paket `numpy`, `pandas`, dan `matplotlib` harus telah dipasang sebelum menggunakan modul inkovis.  
 
 Jika menggunakan jupyter notebook/google colab/kaggle kernel, bisa menggunakan kode berikut: 
 
@@ -71,6 +77,8 @@ fig, ax = plt.subplots()
 inkovis.plot_confirmed_case(dataset, ax)
 ```
 
+Variasi penggunaan modul bisa dilihat pada buku [[Github]: inkovis_nb.ipynb](https://github.com/taruma/inkovis/blob/master/notebook/inkovis_nb.ipynb).
+
 ### Dokumentasi
 
 Untuk saat ini, belum tersedia dokumentasi mengenai penggunaan modul inkovis. 
@@ -84,4 +92,12 @@ Modul inkovis menggunakan potongan kode/fungsi orang lain yang disimpan pada fil
 
 ## Dataset
 
-Informasi mengenai dataset bisa baca [dataset/README](dataset/README.md) untuk lebih detail.
+Informasi mengenai dataset bisa membuka [dataset](dataset) untuk lebih detail.
+
+-----
+
+## Github Actions
+
+Pada repo ini menggunakan layanan Github Actions yang mengotomasi beberapa pekerjaan. Github Actions yang aktif di repo ini antara lain:
+
+- `execnb` (pasif): Mengeksekusi seluruh notebook `.ipynb` pada direktori `notebook/`. _Actions_ ini hanya aktif saat menggunakan kata kunci `[execnb]` pada judul _pull request_ atau pesan _commit_. Otomasi ini digunakan untuk memperbarui notebook di github dan gambar/grafik yang digunakan di github atau situs lainnya.  
