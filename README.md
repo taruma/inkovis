@@ -1,14 +1,16 @@
 # inkovis
 
-<div align="center">
-
 Github Actions | Status
 :- | :-
 `execnb` | [![Execute Notebook](https://github.com/taruma/inkovis/workflows/Execute%20Notebook/badge.svg)](https://github.com/taruma/inkovis/actions)
 
-</div>
-
 Repo inkovis berisikan modul `inkovis` dan _jupyter notebook_ (buku) yang dapat digunakan untuk memvisualisasikan data infeksi COVID-19 di Indonesia. 
+
+<div align="center">
+
+**Proyek inkovis tidak akan menerima pengembangan/pembaruan oleh @taruma sejak 3 April 2020. Proyek ini terbuka untuk dikembangkan/dimodifikasi lebih lanjut baik melalui _pull request_ atau terpisah (_fork_).**
+
+</div>
 
 -----
 
@@ -93,6 +95,22 @@ Modul inkovis menggunakan potongan kode/fungsi orang lain yang disimpan pada fil
 ## Dataset
 
 Informasi mengenai dataset bisa membuka [dataset](dataset) untuk lebih detail.
+
+-----
+
+## Berkontribusi
+
+Kontribusi dapat berupa:
+
+- Pengembangan/modifikasi modul `inkovis.py`
+- Dokumentasi (Dokumen Github, _docstring_)
+- Pembaruan dataset
+- Notebook (.ipynb)
+- dll. 
+
+### Kontribusi dataset
+
+Jika ingin berkontribusi dalam dataset berupa pembaruan, dapat memperbarui berkas `data_infeksi_covid19_indonesia.csv`. Pada judul _pull request_ tambahkan `[execnb]` untuk memperbarui seluruh _notebook_ yang tersedia di repo ini. 
 
 -----
 
