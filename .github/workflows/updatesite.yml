@@ -1,8 +1,8 @@
-name: Update Dataset
+name: Update Site
 
 on:
   schedule:
-    - cron: "0 10 * * *"
+    - cron: "30 10 * * *"
 
 jobs:
   build:
@@ -35,12 +35,13 @@ jobs:
 
       - name: Run code
         run: |
-          python auto_update.py
+          cd notebook
+          python grafik_inkovis.py
 
       - name: Commit Changes
         run: |
           git config --global user.email "hi@taruma.info"
           git config --global user.name "taruma"
           git add -A
-          git commit -m 'Actions: Update Dataset'
+          git commit -m 'Actions: Update Site'
           git push
