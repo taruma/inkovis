@@ -13,7 +13,7 @@ layout: home
 
 {% include alert.html text="Kunjungi halaman <b><a href=\"https://github.com/taruma/inkovis \">github</a></b> untuk mengetahui status/informasi proyek ini."%}
 
-{% include info.html text="Dataset inkovis diperbarui otomatis setiap jam 17.00 WIB. Dan situs ini diperbarui otomatis setiap jam 17.30 WIB. Lihat statusnya <a href=\"\">disini</a>."%}
+{% include info.html text="Dataset inkovis diperbarui otomatis setiap jam 17.00 WIB. Dan situs ini diperbarui otomatis setiap jam 17.30 WIB. Lihat statusnya <a href=\"https://github.com/taruma/inkovis/actions\">disini</a>."%}
 
 {% include lastdata.html %}
 
