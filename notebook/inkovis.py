@@ -142,26 +142,54 @@ def plot_confirmed_case(
 
             # TEXT DIFF
             if i > 0 and show_diff_numbers:
-                text_diff = (
-                    f'{diff_positive[i-1]}\n{diff_recovered[i-1]}' +
-                    f'\n{diff_deaths[i-1]}')
 
                 if show_hist:
+
                     ax.annotate(
-                        text_diff,
-                        (x_pos[i]-1, val), xytext=(0, 10),
+                        f'{diff_deaths[i-1]:+d}', (x_pos[i]-1, val),
+                        xytext=(0, 5),
                         textcoords='offset points',
                         ha='center', va='bottom', size=10,
-                        bbox=dict(facecolor='gray', alpha=0.1,
-                                  boxstyle='square')
+                        color='black',
+                        # bbox=dict(
+                        #     facecolor='red', alpha=.3, boxstyle='square',
+                        #     edgecolor='red', linewidth=2
+                        # )
+                    )
+
+                    ax.annotate(
+                        f'{diff_recovered[i-1]:+d}', (x_pos[i]-1, val),
+                        xytext=(0, 20),
+                        textcoords='offset points',
+                        ha='center', va='bottom', size=10,
+                        color='black',
+                        # bbox=dict(
+                        #     facecolor='green', alpha=.3, boxstyle='square',
+                        #     edgecolor='green', linewidth=2
+                        # )
+                    )
+
+                    ax.annotate(
+                        f'{diff_positive[i-1]:+d}', (x_pos[i]-1, val),
+                        xytext=(0, 35),
+                        textcoords='offset points',
+                        ha='center', va='bottom', size=10,
+                        color='black',
+                        # bbox=dict(
+                        #     facecolor='orange', alpha=.3, boxstyle='square',
+                        #     edgecolor='orange', linewidth=2
+                        # )
                     )
 
                 ax.annotate(
-                    f'{diff_confirmed[i-1]}',
-                    (x_pos[i]-1, val), xytext=(0, ann_space),
+                    f'{diff_confirmed[i-1]:+d}', (x_pos[i]-1, val),
+                    xytext=(0, 50),
                     textcoords='offset points',
-                    ha='center', va='bottom', size=10,
-                    bbox=dict(facecolor='red', alpha=0.3, boxstyle='round')
+                    ha='center', va='bottom',
+                    size=12, color='red', fontweight='bold',
+                    # bbox=dict(
+                    #     facecolor='white', alpha=1, edgecolor=None
+                    # )
                 )
 
     # INFO
@@ -305,20 +333,9 @@ def plot_testing_case(
 
     if show_numbers:
         for i, val in enumerate(total_tests):
-            # text = (
-            #     f'{total_positive[i]}\n' +
-            #     f'{total_negative[i]}\n{total_checks[i]}')
 
             # TOTAL TESTS
             if show_hist:
-                # ax.annotate(
-                #     text, (x_pos[i], val), xytext=(0, 10),
-                #     textcoords='offset points',
-                #     ha='center', va='bottom', size=10,
-                #     bbox=dict(
-                #         facecolor='white', alpha=0.7, boxstyle='square'
-                #     )
-                # )
 
                 ax.annotate(
                     f'{total_checks[i]}', (x_pos[i], val), xytext=(0, 10),
@@ -365,33 +382,52 @@ def plot_testing_case(
 
             # TEXT DIFF
             if i > 0 and show_diff_numbers:
-                text_diff = (
-                    f'{diff_positive[i-1]}\n{diff_negative[i-1]}' +
-                    f'\n{diff_checks[i-1]}'
-                )
 
                 y_pos_diff = (
                     val if val > total_tests[i-1] else total_tests[i-1])
 
                 if show_hist:
+                    # ax.annotate(
+                    #     text_diff,
+                    #     (x_pos[i]-1, y_pos_diff), xytext=(0, 10),
+                    #     textcoords='offset points',
+                    #     ha='center', va='bottom', size=10,
+                    #     bbox=dict(
+                    #         facecolor='gray', alpha=0.1, boxstyle='square'
+                    #     )
+                    # )
+
                     ax.annotate(
-                        text_diff,
-                        (x_pos[i]-1, y_pos_diff), xytext=(0, 10),
+                        f'{diff_checks[i-1]:+d}', (x_pos[i]-1, y_pos_diff),
+                        xytext=(0, 5),
                         textcoords='offset points',
                         ha='center', va='bottom', size=10,
-                        bbox=dict(
-                            facecolor='gray', alpha=0.1, boxstyle='square'
-                        )
+                        color='black',
+                    )
+
+                    ax.annotate(
+                        f'{diff_negative[i-1]:+d}', (x_pos[i]-1, y_pos_diff),
+                        xytext=(0, 20),
+                        textcoords='offset points',
+                        ha='center', va='bottom', size=10,
+                        color='black',
+                    )
+
+                    ax.annotate(
+                        f'{diff_positive[i-1]:+d}', (x_pos[i]-1, y_pos_diff),
+                        xytext=(0, 35),
+                        textcoords='offset points',
+                        ha='center', va='bottom', size=10,
+                        color='black',
                     )
 
                 ax.annotate(
-                    f'{diff_tests[i-1]}',
-                    (x_pos[i]-1, y_pos_diff), xytext=(0, ann_space),
+                    f'{diff_tests[i-1]:+d}', (x_pos[i]-1, y_pos_diff),
+                    xytext=(0, 50),
                     textcoords='offset points',
-                    ha='center', va='bottom', size=10,
-                    bbox=dict(
-                        facecolor='blue', alpha=0.3, boxstyle='round'
-                    )
+                    ha='center', va='bottom',
+                    size=12, color='blue', fontweight='bold',
+
                 )
 
     # INFO
@@ -894,137 +930,137 @@ def plot_testing_growth(
     plt.tight_layout()
 
 
-def plot_confirmed_percent(
-        dataset, ax, mask=None, days=1,
-        show_info=True, text_left=None, text_right=None,
-        show_title=True, text_title=None,
-        show_numbers=True, show_hist=True,
-        show_legend=True,
-        show_diff_numbers=False, show_diff_bar=True):
+# def plot_confirmed_percent(
+#         dataset, ax, mask=None, days=1,
+#         show_info=True, text_left=None, text_right=None,
+#         show_title=True, text_title=None,
+#         show_numbers=True, show_hist=True,
+#         show_legend=True,
+#         show_diff_numbers=False, show_diff_bar=True):
 
-    slice_data = (
-        slice(None, None, days) if mask is None else slice(*mask, days)
-    )
+#     slice_data = (
+#         slice(None, None, days) if mask is None else slice(*mask, days)
+#     )
 
-    data = dataset[slice_data]
-    date_index = data.index
-    date_ticks = date_index.strftime('%d\n%b').to_list()
-    rows, _ = data.shape
+#     data = dataset[slice_data]
+#     date_index = data.index
+#     date_ticks = date_index.strftime('%d\n%b').to_list()
+#     rows, _ = data.shape
 
-    total_confirmed = data['konfirmasi'].values
-    total_recovered = data['sembuh'].values
-    total_deaths = data['meninggal'].values
-    total_positive = total_confirmed - total_recovered - total_deaths
+#     total_confirmed = data['konfirmasi'].values
+#     total_recovered = data['sembuh'].values
+#     total_deaths = data['meninggal'].values
+#     total_positive = total_confirmed - total_recovered - total_deaths
 
-    percent_recovered = total_recovered / total_confirmed * 100
-    percent_deaths = total_deaths / total_confirmed * 100
-    percent_positive = total_positive / total_confirmed * 100
+#     percent_recovered = total_recovered / total_confirmed * 100
+#     percent_deaths = total_deaths / total_confirmed * 100
+#     percent_positive = total_positive / total_confirmed * 100
 
-    # Y POSITIONS
-    y_pos = np.arange(0, rows*2, 2)
-    y_pos_diff = y_pos[:-1] + 1
+#     # Y POSITIONS
+#     y_pos = np.arange(0, rows*2, 2)
+#     y_pos_diff = y_pos[:-1] + 1
 
-    y_pos = -y_pos
-    y_pos_diff
+#     y_pos = -y_pos
+#     y_pos_diff
 
-    # BAR
-    # POSITIVE
-    ax.barh(
-        y_pos, total_positive, left=0,
-        color='orange', label='Dalam Perawatan'
-    )
+#     # BAR
+#     # POSITIVE
+#     ax.barh(
+#         y_pos, total_positive, left=0,
+#         color='orange', label='Dalam Perawatan'
+#     )
 
-    # RECOVERED
-    ax.barh(
-        y_pos, -total_recovered, left=0,
-        color='green', label='Sembuh'
-    )
+#     # RECOVERED
+#     ax.barh(
+#         y_pos, -total_recovered, left=0,
+#         color='green', label='Sembuh'
+#     )
 
-    # DEATHS
-    ax.barh(
-        y_pos, -total_deaths, left=-total_recovered,
-        color='red', label='Meninggal'
-    )
+#     # DEATHS
+#     ax.barh(
+#         y_pos, -total_deaths, left=-total_recovered,
+#         color='red', label='Meninggal'
+#     )
 
-    # DIFF
+#     # DIFF
 
-    diff_confirmed = np.diff(total_confirmed)
-    diff_deaths = np.diff(total_deaths)
-    diff_recovered = np.diff(total_recovered)
-    diff_positive = np.diff(total_positive)
+#     diff_confirmed = np.diff(total_confirmed)
+#     diff_deaths = np.diff(total_deaths)
+#     diff_recovered = np.diff(total_recovered)
+#     diff_positive = np.diff(total_positive)
 
-    # ANNOTATION
+#     # ANNOTATION
 
-    y_rd = total_recovered + total_deaths
+#     y_rd = total_recovered + total_deaths
 
-    if show_numbers:
-        for i, val in enumerate(total_confirmed):
+#     if show_numbers:
+#         for i, val in enumerate(total_confirmed):
 
-            if show_hist:
+#             if show_hist:
 
-                ax.annotate(
-                    f'{percent_positive[i]:.1f}%', (
-                        0, y_pos[i]),
-                    xytext=(10, 0), textcoords='offset points',
-                    ha='left', va='center', size=10,  family='monospace',
-                    color='black',
-                    bbox=dict(
-                        facecolor='white', alpha=1, boxstyle='square',
-                        edgecolor='orange', linewidth=2
-                    )
-                )
+#                 ax.annotate(
+#                     f'{percent_positive[i]:.1f}%', (
+#                         0, y_pos[i]),
+#                     xytext=(10, 0), textcoords='offset points',
+#                     ha='left', va='center', size=10,  family='monospace',
+#                     color='black',
+#                     bbox=dict(
+#                         facecolor='white', alpha=1, boxstyle='square',
+#                         edgecolor='orange', linewidth=2
+#                     )
+#                 )
 
-                ax.annotate(
-                    f'{percent_recovered[i]:.1f}%', (
-                        0, y_pos[i]),
-                    xytext=(-10, 0), textcoords='offset points',
-                    ha='right', va='center', size=10, family='monospace',
-                    color='black',
-                    bbox=dict(
-                        facecolor='white', alpha=1, boxstyle='square',
-                        edgecolor='green', linewidth=2
-                    )
-                )
+#                 ax.annotate(
+#                     f'{percent_recovered[i]:.1f}%', (
+#                         0, y_pos[i]),
+#                     xytext=(-10, 0), textcoords='offset points',
+#                     ha='right', va='center', size=10, family='monospace',
+#                     color='black',
+#                     bbox=dict(
+#                         facecolor='white', alpha=1, boxstyle='square',
+#                         edgecolor='green', linewidth=2
+#                     )
+#                 )
 
-                ax.annotate(
-                    f'{percent_deaths[i]:.1f}%', (
-                        0, y_pos[i]),
-                    xytext=(-50, 0), textcoords='offset points',
-                    ha='right', va='center', size=10, family='monospace',
-                    color='black',
-                    bbox=dict(
-                        facecolor='white', alpha=1, boxstyle='square',
-                        edgecolor='red', linewidth=2
-                    )
-                )
+#                 ax.annotate(
+#                     f'{percent_deaths[i]:.1f}%', (
+#                         0, y_pos[i]),
+#                     xytext=(-50, 0), textcoords='offset points',
+#                     ha='right', va='center', size=10, family='monospace',
+#                     color='black',
+#                     bbox=dict(
+#                         facecolor='white', alpha=1, boxstyle='square',
+#                         edgecolor='red', linewidth=2
+#                     )
+#                 )
 
-                pass
+#                 pass
 
-    # LEGEND
+#     # LEGEND
 
-    if show_title:
-        text_title = (
-            'KASUS KONFIRMASI COVID-19 DI INDONESIA'
-            if text_title is None else text_title
-        )
-        ax.set_title(
-            text_title,
-            fontsize='x-large', fontweight='bold'
-        )
+#     if show_title:
+#         text_title = (
+#             'KASUS KONFIRMASI COVID-19 DI INDONESIA'
+#             if text_title is None else text_title
+#         )
+#         ax.set_title(
+#             text_title,
+#             fontsize='x-large', fontweight='bold'
+#         )
 
-    ax.set_yticks(y_pos)
-    ax.set_yticklabels(date_ticks, rotation=0)
+#     ax.set_yticks(y_pos)
+#     ax.set_yticklabels(date_ticks, rotation=0)
 
-    ax.set_ylabel('Tanggal', fontsize=14)
-    ax.set_xlabel('Kasus Konfirmasi', fontsize=14)
+#     ax.set_ylabel('Tanggal', fontsize=14)
+#     ax.set_xlabel('Kasus Konfirmasi', fontsize=14)
 
-    ax.grid(True, axis='both')
+#     ax.grid(True, axis='both')
 
-    if show_legend:
-        ax.legend(loc='upper right')
-    # ax.margins(x=0.01, y=0.3)
+#     if show_legend:
+#         ax.legend(loc='upper right')
+#     # ax.margins(x=0.01, y=0.3)
 
-    ax.axvline(0, linestyle='-', color='grey')
-    ax.margins(x=0.3)
+#     ax.axvline(0, linestyle='-', color='grey')
+#     ax.margins(x=0.3)
 
-    plt.tight_layout()
+#     plt.tight_layout()
