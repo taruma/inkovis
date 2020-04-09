@@ -3,12 +3,21 @@
 Github Actions | Status
 :- | :-
 `execnb` | [![Execute Notebook](https://github.com/taruma/inkovis/workflows/Execute%20Notebook/badge.svg)](https://github.com/taruma/inkovis/actions)
+`updatedata` | [![Update Dataset](https://github.com/taruma/inkovis/workflows/Update%20Dataset/badge.svg)](https://github.com/taruma/inkovis/actions)
+`updatesite` | [![Update Site](https://github.com/taruma/inkovis/workflows/Update%20Site/badge.svg)](https://github.com/taruma/inkovis/actions)
+
 
 Repo inkovis berisikan modul `inkovis` dan _jupyter notebook_ (buku) yang dapat digunakan untuk memvisualisasikan data infeksi COVID-19 di Indonesia. 
 
 <div align="center">
 
-**Proyek inkovis tidak akan menerima pengembangan/pembaruan oleh @taruma sejak 3 April 2020. Proyek ini terbuka untuk dikembangkan/dimodifikasi lebih lanjut baik melalui _pull request_ atau terpisah (_fork_).**
+**Kunjungi situs inkovis di [taruma.github.io/inkovis](https://taruma.github.io/inkovis/)**. 
+</div>
+
+
+<div align="center">
+
+**Proyek (situs dan dataset) akan diperbarui melalui otomasi menggunakan Github Actions. Proyek ini terbuka untuk dikembangkan/dimodifikasi lebih lanjut baik melalui _pull request_ atau terpisah (_fork_).**
 
 </div>
 
@@ -38,15 +47,7 @@ Berikut notebook/pos yang menggunakan modul/dataset inkovis:
 
 ## Contoh Grafik
 
-Contoh grafik menggunakan modul inkovis dengan data 31 hari terakhir (harian):
-
-### Kasus Konfirmasi
-
-![](notebook/SUM_KASUS_KONFIRMASI_HARIAN.png)
-
-### Jumlah Spesimen
-
-![](notebook/SUM_JUMLAH_SPESIMEN_HARIAN.png)
+Kunjungi situs [taruma.github.io/inkovis](https://taruma.github.io/inkovis/).
 
 -----
 
@@ -119,3 +120,5 @@ Jika ingin berkontribusi dalam dataset berupa pembaruan, dapat memperbarui berka
 Pada repo ini menggunakan layanan Github Actions yang mengotomasi beberapa pekerjaan. Github Actions yang aktif di repo ini antara lain:
 
 - `execnb` (pasif): Mengeksekusi seluruh notebook `.ipynb` pada direktori `notebook/`. _Actions_ ini hanya aktif saat menggunakan kata kunci `[execnb]` pada judul _pull request_ atau pesan _commit_. Otomasi ini digunakan untuk memperbarui notebook di github dan gambar/grafik yang digunakan di github atau situs lainnya.  
+- `updatedata` (terjadwal 17.00 WIB): memperbarui dataset inkovis berdasarkan laporan situasi terkini. Diasumsikan bahwa laporannya menggunakan penamaan yang sama beserta alamat yang sama.
+- `updatesite` (terjadwal 17.30 WIB): memproduksi grafik yang digunakan oleh situs (untuk halaman grafik 31 hari terakhir). 
