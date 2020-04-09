@@ -1,0 +1,9 @@
+{% assign lastdata = site.data.logdata.date %}
+
+<div align="center">
+    <div class="Toast">
+        <span class="Toast-icon">{% octicon info %}</span>
+        <span class="Toast-content">Dataset Inkovis terakhir diperbarui pada:
+            <em>{{ lastdata | date: "%B %d, %Y (%A)"}}</em></span>
+    </div>
+</div>
