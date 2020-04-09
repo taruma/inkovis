@@ -1,4 +1,4 @@
-name: Execute Notebook
+name: Update Dataset
 
 on:
   schedule:
