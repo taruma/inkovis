@@ -4,3 +4,5 @@ matplotlib
 jupyterlab
 notebook
 nbconvert
+tika
+requests
