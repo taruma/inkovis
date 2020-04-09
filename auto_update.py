@@ -8,9 +8,7 @@ import requests
 
 print('DONWLOAD DATASET')
 
-url_dataset = (
-    "https://raw.githubusercontent.com/taruma/inkovis" +
-    "/master/dataset/data_infeksi_covid19_indonesia.csv")
+url_dataset = "/dataset/data_infeksi_covid19_indonesia.csv"
 dataset = pd.read_csv(url_dataset, index_col=0, parse_dates=True)
 
 # FIND DIFFERENCE
@@ -142,5 +140,8 @@ print('SAVE LOG')
 
 with open('log_data', 'a') as f:
     f.write('RUN: ' + now_jakarta.strftime('%Y-%m-%d %H:%M'))
+
+with open('docs/_data/logdata.yml', 'w') as f:
+    f.write("date: " + now_jakarta.strftime('%Y-%m-%d') + '\n')
 
 print('FINISH')
