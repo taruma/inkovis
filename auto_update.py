@@ -8,7 +8,7 @@ import requests
 
 print('DONWLOAD DATASET')
 
-url_dataset = "/dataset/data_infeksi_covid19_indonesia.csv"
+url_dataset = "../dataset/data_infeksi_covid19_indonesia.csv"
 dataset = pd.read_csv(url_dataset, index_col=0, parse_dates=True)
 
 # FIND DIFFERENCE
