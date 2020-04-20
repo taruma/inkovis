@@ -6,3 +6,4 @@ notebook
 nbconvert
 tika
 requests
+beautifulsoup4

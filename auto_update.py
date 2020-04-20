@@ -3,8 +3,64 @@ from tika import parser
 from datetime import datetime, timezone, timedelta
 import pandas as pd
 import requests
+import logging
+from bs4 import BeautifulSoup
+
+
+logging.basicConfig(level=logging.DEBUG)
+
+# MODULE SOUP
+
+
+def _as_nama_bulan(month):
+    nama_bulan = {
+        1: 'januari',
+        2: 'februari',
+        3: 'maret',
+        4: 'april',
+        5: 'mei',
+        6: 'juni',
+        7: 'juli',
+        8: 'agustus',
+        9: 'september',
+        10: 'oktober',
+        11: 'november',
+        12: 'desember'
+    }
+
+    return nama_bulan[month]
+
+
+def url_from_date(date):
+    text = (
+        'https://covid19.kemkes.go.id/situasi-infeksi-emerging/' +
+        'info-corona-virus/situasi-terkini-perkembangan-coronavirus-disease' +
+        '-covid-19-' + '{day}-{month}-{year}' + '/')
+
+    day = date.day
+    month = _as_nama_bulan(date.month)
+    year = date.year
+
+    return text.format(day=day, month=month, year=year)
+
+
+def get_soup_from_url(url):
+
+    response = requests.get(url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        return soup
+
+
+def get_pdf_link(soup, text_to_find='situasi_terkini'):
+    for a in soup.find_all('a'):
+        link = a.get('href')
+        link = link if link is not None else ''
+        if link.endswith('pdf') and (text_to_find in link.lower()):
+            return link
 
 # DOWNLOAD DATASET
+
 
 print('DONWLOAD DATASET')
 
@@ -19,40 +75,47 @@ now_jakarta = datetime.now(timezone(timedelta(hours=7)))
 now_systems = datetime.now()
 
 diff = pd.date_range('20200218', now_systems,
-                     freq='D').difference(dataset.index)[1:]
+                     freq='D')[:-1].difference(dataset.index)
+diff = diff + pd.DateOffset(days=1)
 
 # DOWNLOAD
 
 
-def download_report(date, dir=''):
-    base_url = (
-        'https://infeksiemerging.kemkes.go.id/download' +
-        '/Situasi_Terkini_{}.pdf')
-    date_url = date.strftime('%d%m%y')
+def scrape_for_reports(diff):
 
-    url = base_url.format(date_url)
-    r = requests.get(url)
+    reports = []
 
-    report_name = 'situasi_terkini_{}.pdf'
+    for date in diff:
+        _url = url_from_date(date)
+        _soup = get_soup_from_url(_url)
 
-    date_report = date.strftime('%Y_%m_%d')
-    file_name = report_name.format(date_report)
-    if r.status_code == 200:
-        with open(dir + file_name, 'wb') as f:
-            f.write(r.content)
-        return file_name
-    else:
-        return None
+        if _soup is not None:
+            _link = get_pdf_link(_soup)
+            _date_report = date.strftime('%Y_%m_%d')
+            _report_name = 'situasi_terkini_{}.pdf'.format(_date_report)
+            reports.append((_link, _report_name))
 
-# DOWNLOAD MISSING DATA/PDF
+    return reports
 
 
-print('DOWNLOADING REPORT')
+reports = scrape_for_reports(diff)
 
-valid_date = []
-for date in diff:
-    status = download_report(date, dir='dataset/pdf/')
-    valid_date.append(date) if status is not None else None
+
+def download_reports(reports, directory='dataset/pdf/'):
+    res = []
+    for link, name in reports:
+        r = requests.get(link)
+        if r.status_code == 200:
+            with open(directory + name, 'wb') as f:
+                f.write(r.content)
+            print('SUCCESS: ', directory + name)
+            res.append(directory + name)
+    return res
+
+
+print('DOWNLOADING REPORTS')
+
+download_reports(reports)
 
 # PARSE/RETRIEVE INFORMATION
 
@@ -139,7 +202,7 @@ dataset.to_csv(save_path)
 print('SAVE LOG')
 
 with open('log_data', 'a') as f:
-    f.write('RUN: ' + now_jakarta.strftime('%Y-%m-%d %H:%M'))
+    f.write('RUN: ' + now_jakarta.strftime('%Y-%m-%d %H:%M') + '\n')
 
 with open('docs/_data/logdata.yml', 'w') as f:
     f.write("date: " + now_jakarta.strftime('%Y-%m-%d') + '\n')
