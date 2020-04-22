@@ -4,6 +4,6 @@ matplotlib
 jupyterlab
 notebook
 nbconvert
-tika
+pdfplumber
 requests
 beautifulsoup4

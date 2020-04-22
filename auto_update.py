@@ -1,16 +1,9 @@
 import re
-from tika import parser
 from datetime import datetime, timezone, timedelta
 import pandas as pd
 import requests
-import logging
+import pdfplumber
 from bs4 import BeautifulSoup
-
-
-# SETUP
-
-logging.basicConfig(level=logging.DEBUG)
-
 
 # MODULE SOUP
 
@@ -124,17 +117,24 @@ download_reports(reports)
 
 
 def _remove_special(text):
-    for special in '() .':
+    for special in '() .\n':
         text = text.replace(special, '')
     return text.lower()
+
+
+def text_from_pdf(pdf):
+
+    with pdfplumber.open(pdf) as f:
+        text_list = [page.extract_text() for page in f.pages]
+        return ''.join(text_list)
 
 
 def _retrieve_text(date, file='situasi_terkini_{}.pdf', dir=''):
     path_file = dir + file.format(date.strftime('%Y_%m_%d'))
 
-    raw = parser.from_file(path_file)
+    text = text_from_pdf(path_file)
 
-    return _remove_special(raw['content'])
+    return _remove_special(text)
 
 
 def _retrieve_number(keyword, text):
