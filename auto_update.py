@@ -7,7 +7,10 @@ import logging
 from bs4 import BeautifulSoup
 
 
+# SETUP
+
 logging.basicConfig(level=logging.DEBUG)
+
 
 # MODULE SOUP
 
@@ -46,7 +49,7 @@ def url_from_date(date):
 
 def get_soup_from_url(url):
 
-    response = requests.get(url)
+    response = requests.get(url, timeout=300)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, 'html.parser')
         return soup
@@ -104,7 +107,7 @@ reports = scrape_for_reports(diff)
 def download_reports(reports, directory='dataset/pdf/'):
     res = []
     for link, name in reports:
-        r = requests.get(link)
+        r = requests.get(link, timeout=300)
         if r.status_code == 200:
             with open(directory + name, 'wb') as f:
                 f.write(r.content)
