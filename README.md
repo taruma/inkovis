@@ -11,7 +11,7 @@ Repo inkovis berisikan modul `inkovis` dan _jupyter notebook_ (buku) yang dapat 
 
 <div align="center">
 
-**Kunjungi situs inkovis di [taruma.github.io/inkovis](https://taruma.github.io/inkovis/)**. 
+**Kunjungi situs inkovis di [hidrokit.github.io/inkovis](https://hidrokit.github.io/inkovis/)**. 
 </div>
 
 
