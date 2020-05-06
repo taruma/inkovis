@@ -40,8 +40,8 @@ jobs:
 
       - name: Commit Changes
         run: |
-          git config --global user.email "hi@taruma.info"
-          git config --global user.name "taruma"
+          git config --global user.email "timhidrokit@gmail.com"
+          git config --global user.name "hidrokit"
           git add -A
           git commit -m 'Actions: Update Site'
           git push
