@@ -32,6 +32,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-actions.txt
+          pip install kaggle==1.5.4
 
       - name: Run code
         run: |
@@ -44,3 +45,21 @@ jobs:
           git add -A
           git commit -m 'Actions: Update Dataset'
           git push
+
+      - name: Kaggle Update
+        run: |
+          mkdir kaggle
+          cd kaggle
+          echo "DOWNLOAD METADATA AND FILES"
+          kaggle datasets download ${KAGGLE_DATASET_URL} --unzip
+          kaggle datasets metadata ${KAGGLE_DATASET_URL}
+          echo "COPY NEW DATASET"
+          cp ../dataset/data_infeksi_covid19_indonesia.csv ./data_infeksi_covid19_indonesia.csv
+          echo "UPLOAD DATASET"
+          kaggle datasets version -m "updated data [hidrokit/inkovis]"
+          echo "FINISH"
+          ls -l
+        env:
+          KAGGLE_DATASET_URL: ${{ secrets.KAGGLE_DATASET_URL }}
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
