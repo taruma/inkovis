@@ -1,5 +1,16 @@
 # inkovis
 
+-----
+
+<div align="center">
+Update 2 Juni 2020: 
+
+__PROYEK INKOVIS (DATASET INKOVIS) TIDAK DIPERBARUI LAGI SEJAK 1 JUNI 2020.__ Anda dapat memperbarui dataset dengan menggunakan _script_ yang telah tersedia (`auto_update.py`). Proyek ini akan disimpan sebagai arsip. Seluruh github actions akan dimatikan. 
+</div>
+
+-----
+
+
 Proyek inkovis diawali sebagai proyek modul python bernama `inkovis.py` untuk memvisualisasikan data infeksi covid-19 di Indonesia. Seiringnya waktu, proyek inkovis menyediakan dataset covid-19 Indonesia yang diperoleh dari laporan situasi terkini (_situation report_) harian yang dilaporkan di situs covid19.kemkes.go.id.
 
 Ringkasnya proyek inkovis berisikan:
